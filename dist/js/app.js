@@ -28,15 +28,51 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   });
 }]);
 
-app.controller("Timer.controller", ["$scope", "$interval",
-  function($scope){
+app.constant('ButtonText', {
+  START: 'Start the Timer!',
+  RESET: 'Reset the Timer!'
+});
+
+app.controller("Timer.controller", ["$scope", "$interval", "ButtonText",
+  function($scope, $interval, ButtonText){
+
+    var duration = moment.duration({
+        'seconds': 00,
+        'minutes': 25
+      });
+
+      var timestamp = new Date(0,0,0,0,25,00);
+
+      var isStarted = false;
+
     $scope.message = {
-      time: new Date()
+      time: timestamp
     };
+
+    $scope.buttonText = ButtonText.START;
+
+    $interval(function(){
+      if (isStarted){
+        $scope.timeStamp = +(new Date);
+        $scope.message.time = moment($scope.message.time).subtract(1, 's');
+      }
+    }, 1000);
+
+    $scope.startTimer = function(){
+      isStarted = !isStarted; //this does opposite affect every time button is clicked
+      if (isStarted){
+        $scope.buttonText = ButtonText.RESET;
+      }
+      else {
+        $scope.buttonText = ButtonText.START;
+        $scope.message.time = new Date(0,0,0,0,25,00);
+      }
+      //$scope.buttonText = isStarted ? ButtonText.RESET : ButtonText.START;
+    }
 
   }]);
 
-  app.directive('controltimer', function () {
+  app.directive('xcontroltimer', function () {
     return {
         restrict: 'A',
         template: '/templates/button.html',

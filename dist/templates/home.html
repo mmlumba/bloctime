@@ -1,3 +1,2 @@
-<h2>Time goes here</h2>
-<span>{{message.time | amDateFormat:'mm:ss'}}</span>
-<input type="button" class="btn btn-primary btn-lg btn-info" controltimer value="Start the timer!"></input>
+<h2>{{message.time | amDateFormat:'mm:ss'}}</h2>
+<input type="button" class="btn btn-primary btn-lg btn-info" controltimer value="{{buttonText}}" ng-click="startTimer()"></input>
