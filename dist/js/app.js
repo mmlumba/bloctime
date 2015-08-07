@@ -28,62 +28,69 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   });
 }]);
 
+app.filter('durationDisplay', function(){
+  return function(d){
+    return moment.utc(d.asMilliseconds()).format('mm:ss');
+  }
+});
+
 app.constant('ButtonText', {
   START: 'Start the Timer!',
-  RESET: 'Reset the Timer!'
+  RESET: 'Reset the Timer!',
+  STARTBREAK: 'Break Time!'
 });
 
 app.controller("Timer.controller", ["$scope", "$interval", "ButtonText",
   function($scope, $interval, ButtonText){
 
-    var duration = moment.duration({
-        'seconds': 00,
-        'minutes': 25
-      });
-
-      var timestamp = new Date(0,0,0,0,25,00);
-
-      var isStarted = false;
+    var isStarted = false; //executes javascript code that subtracts the time
+    var timeDuration = moment.duration('00:00:15');
+    $scope.onBreak = false;
 
     $scope.message = {
-      time: timestamp
+      time: timeDuration
     };
 
     $scope.buttonText = ButtonText.START;
+    $scope.breakText = ButtonText.STARTBREAK;
 
     $interval(function(){
       if (isStarted){
-        $scope.timeStamp = +(new Date);
-        $scope.message.time = moment($scope.message.time).subtract(1, 's');
+        $scope.message.time = $scope.message.time.subtract(1, 's');
+
+        if ( (+$scope.message.time) === 0){
+          if ($scope.onBreak){
+            $scope.onBreak = false;
+            $scope.message.time = moment.duration('00:00:15');
+            $scope.buttonText = ButtonText.START;
+          }
+          else {
+            $scope.onBreak = true;
+          }
+          isStarted = false;
+        }
       }
     }, 1000);
 
     $scope.startTimer = function(){
+
       isStarted = !isStarted; //this does opposite affect every time button is clicked
+
       if (isStarted){
         $scope.buttonText = ButtonText.RESET;
       }
       else {
+        $scope.message.time = moment.duration('00:00:15');
         $scope.buttonText = ButtonText.START;
-        $scope.message.time = new Date(0,0,0,0,25,00);
       }
-      //$scope.buttonText = isStarted ? ButtonText.RESET : ButtonText.START;
+
+    }
+
+    $scope.startBreakTimer = function(){
+      if ($scope.onBreak){
+        $scope.message.time = moment.duration('00:00:10');
+        isStarted = true;
+      }
     }
 
   }]);
-
-  app.directive('xcontroltimer', function () {
-    return {
-        restrict: 'A',
-        template: '/templates/button.html',
-        link: function (scope, elem, attrs) {
-            elem.bind("click", function () {
-                if (elem.val() == "Start the timer!") {
-                    elem.val("Stop the timer!");
-                } else {
-                    elem.val("Start the timer!");
-                }
-            })
-        }
-    }
-});
