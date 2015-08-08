@@ -5,8 +5,15 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
   $stateProvider.state('home', {
     url: '/',
-    controller: 'Timer.controller',
-    templateUrl: '/templates/home.html'
+    views: {
+      'timerclock@home' : {
+        controller: 'Timer.controller',
+        templateUrl: '/templates/home.html'
+      },
+      'taskList@home': {
+        templateUrl: '/templates/taskList.html'
+      }
+    }
   });
 
   moment.locale('en', {
