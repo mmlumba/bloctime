@@ -40,11 +40,20 @@ app.constant('ButtonText', {
   STARTBREAK: 'Break Time!'
 });
 
-app.controller("Timer.controller", ["$scope", "$interval", "ButtonText",
-  function($scope, $interval, ButtonText){
+app.constant('Times', {
+  WORKTIME: '00:00:10',
+  BREAKTIME: '00:00:05',
+  LONGBREAK: '00:00:20'
+});
+
+app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times",
+  function($scope, $interval, ButtonText, Times){
+
+    var workCount = 0;
+    var breakCount = 0;
 
     var isStarted = false; //executes javascript code that subtracts the time
-    var timeDuration = moment.duration('00:00:15');
+    var timeDuration = moment.duration(Times.WORKTIME);
     $scope.onBreak = false;
 
     $scope.message = {
@@ -61,11 +70,15 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText",
         if ( (+$scope.message.time) === 0){
           if ($scope.onBreak){
             $scope.onBreak = false;
-            $scope.message.time = moment.duration('00:00:15');
+            $scope.message.time = moment.duration(Times.WORKTIME);
             $scope.buttonText = ButtonText.START;
+            breakCount++
+            console.log("break count: " + breakCount);
           }
           else {
             $scope.onBreak = true;
+            workCount++
+            console.log("work session count: " + workCount);
           }
           isStarted = false;
         }
@@ -80,7 +93,7 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText",
         $scope.buttonText = ButtonText.RESET;
       }
       else {
-        $scope.message.time = moment.duration('00:00:15');
+        $scope.message.time = moment.duration(Times.WORKTIME);
         $scope.buttonText = ButtonText.START;
       }
 
@@ -88,7 +101,11 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText",
 
     $scope.startBreakTimer = function(){
       if ($scope.onBreak){
-        $scope.message.time = moment.duration('00:00:10');
+        $scope.message.time = moment.duration(Times.BREAKTIME);
+        if (workCount % 4 == 0){
+          $scope.message.time = moment.duration(Times.LONGBREAK);
+          workCount = 0;
+        }
         isStarted = true;
       }
     }
