@@ -1,4 +1,4 @@
-var app = angular.module("BlocTime", ["firebase", "ui.router", "angularMoment"]);
+var app = angular.module("PomiPomi", ["firebase", "ui.router", "angularMoment"]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
   $urlRouterProvider.otherwise('/');
