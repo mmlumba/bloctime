@@ -56,10 +56,12 @@ app.constant('Times', {
 app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times",
   function($scope, $interval, ButtonText, Times){
 
+    //var mySound = null;
+
     var workCount = 0;
     var breakCount = 0;
 
-    var isStarted = false; //executes javascript code that subtracts the time
+    $scope.isStarted = false; //executes javascript code that subtracts the time
     var timeDuration = moment.duration(Times.WORKTIME);
     $scope.onBreak = false;
 
@@ -70,33 +72,65 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     $scope.buttonText = ButtonText.START;
     $scope.breakText = ButtonText.STARTBREAK;
 
+    var mySound = new buzz.sound( "/sounds/done", {
+      format: ['mp3'],
+      preload: true
+    });
+
+    $scope.$watch('message.time', function(newVal, oldVal){
+      //console.log(newVal, oldVal);
+      if ( newVal.seconds() === 0 ) {
+        //mySound.load();
+        mySound.bind("error", function(e){
+          console.log(this.getErrorMessage());
+        });
+        mySound.play();
+
+        if ($scope.onBreak){
+          $scope.onBreak = false;
+          $scope.message.time = moment.duration(Times.WORKTIME);
+          $scope.buttonText = ButtonText.START;
+          breakCount++
+          //console.log("break count: " + breakCount);
+        }
+        else {
+          $scope.onBreak = true;
+          workCount++
+          //console.log("work session count: " + workCount);
+        }
+
+        $scope.isStarted = false;
+      }
+    }, true);
+
     $interval(function(){
-      if (isStarted){
+      if ($scope.isStarted){
         $scope.message.time = $scope.message.time.subtract(1, 's');
 
-        if ( (+$scope.message.time) === 0){
+        /*if ( (+$scope.message.time) === 0){
+
           if ($scope.onBreak){
             $scope.onBreak = false;
             $scope.message.time = moment.duration(Times.WORKTIME);
             $scope.buttonText = ButtonText.START;
             breakCount++
-            console.log("break count: " + breakCount);
+            //console.log("break count: " + breakCount);
           }
           else {
             $scope.onBreak = true;
             workCount++
-            console.log("work session count: " + workCount);
+            //console.log("work session count: " + workCount);
           }
-          isStarted = false;
-        }
+          $scope.isStarted = false;
+        }*/
       }
     }, 1000);
 
     $scope.startTimer = function(){
 
-      isStarted = !isStarted; //this does opposite affect every time button is clicked
+      $scope.isStarted = !$scope.isStarted; //this does opposite affect every time button is clicked
 
-      if (isStarted){
+      if ($scope.isStarted){
         $scope.buttonText = ButtonText.RESET;
       }
       else {
@@ -113,7 +147,7 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
           $scope.message.time = moment.duration(Times.LONGBREAK);
           workCount = 0;
         }
-        isStarted = true;
+        $scope.isStarted = true;
       }
     }
 
