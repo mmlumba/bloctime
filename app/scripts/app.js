@@ -53,13 +53,15 @@ app.constant('Times', {
   LONGBREAK: '00:00:20'
 });
 
-app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times",
-  function($scope, $interval, ButtonText, Times){
+app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times", "submitTask",
+  function($scope, $interval, ButtonText, Times, submitTask){
 
     //var mySound = null;
 
     var workCount = 0;
     var breakCount = 0;
+
+    $scope.tasks = taskListService.getTasks();
 
     $scope.isStarted = false; //executes javascript code that subtracts the time
     var timeDuration = moment.duration(Times.WORKTIME);
@@ -107,22 +109,6 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
       if ($scope.isStarted){
         $scope.message.time = $scope.message.time.subtract(1, 's');
 
-        /*if ( (+$scope.message.time) === 0){
-
-          if ($scope.onBreak){
-            $scope.onBreak = false;
-            $scope.message.time = moment.duration(Times.WORKTIME);
-            $scope.buttonText = ButtonText.START;
-            breakCount++
-            //console.log("break count: " + breakCount);
-          }
-          else {
-            $scope.onBreak = true;
-            workCount++
-            //console.log("work session count: " + workCount);
-          }
-          $scope.isStarted = false;
-        }*/
       }
     }, 1000);
 
@@ -151,4 +137,11 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
       }
     }
 
-  }]);
+    $scope.addNewTask = function() {
+      submitTask.add($scope.item);
+      $scope.item = "";
+    };
+
+  }]); //end controller
+
+  module.exports =app;
