@@ -81,11 +81,13 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
             $scope.buttonText = ButtonText.START;
             breakCount++
             console.log("break count: " + breakCount);
+            alert("BACK TO WORK");
           }
           else {
             $scope.onBreak = true;
             workCount++
             console.log("work session count: " + workCount);
+            alert("BREAK TIME");
           }
           isStarted = false;
         }
@@ -112,6 +114,7 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
         if (workCount % 4 == 0){
           $scope.message.time = moment.duration(Times.LONGBREAK);
           workCount = 0;
+          alert("LONG BREAK TIME");
         }
         isStarted = true;
       }
