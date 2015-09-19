@@ -92,11 +92,13 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
           $scope.buttonText = ButtonText.START;
           breakCount++
           //console.log("break count: " + breakCount);
+          alert("BACK TO WORK");
         }
         else {
           $scope.onBreak = true;
           workCount++
           //console.log("work session count: " + workCount);
+          alert("BREAK TIME");
         }
 
         $scope.isStarted = false;
@@ -106,23 +108,6 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     $interval(function(){
       if ($scope.isStarted){
         $scope.message.time = $scope.message.time.subtract(1, 's');
-
-        /*if ( (+$scope.message.time) === 0){
-
-          if ($scope.onBreak){
-            $scope.onBreak = false;
-            $scope.message.time = moment.duration(Times.WORKTIME);
-            $scope.buttonText = ButtonText.START;
-            breakCount++
-            //console.log("break count: " + breakCount);
-          }
-          else {
-            $scope.onBreak = true;
-            workCount++
-            //console.log("work session count: " + workCount);
-          }
-          $scope.isStarted = false;
-        }*/
       }
     }, 1000);
 
@@ -146,6 +131,7 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
         if (workCount % 4 == 0){
           $scope.message.time = moment.duration(Times.LONGBREAK);
           workCount = 0;
+          //alert("LONG BREAK TIME");
         }
         $scope.isStarted = true;
       }
