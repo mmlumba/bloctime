@@ -62,6 +62,8 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     var workCount = 0;
     var breakCount = 0;
 
+    $scope.tasks = submitTask.all;
+
     $scope.isStarted = false; //executes javascript code that subtracts the time
     var timeDuration = moment.duration(Times.WORKTIME);
     $scope.onBreak = false;
@@ -147,10 +149,10 @@ var app = require('./app.js');
 
 app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
 
-  var ref = new Firebase("https://pomipomi.firebaseio.com"); //Firebase reference
-  var sync = $firebase(ref); //AngularFire reference to data
+  var ref = new Firebase("https://pomipomi.firebaseio.com/tasks"); //Firebase reference
+  var taskList =  $firebaseArray(ref); //AngularFire reference to data
   //var taskList = [];
-  taskList = sync.$firebaseArray(ref); //downloads tasks into local array
+  //taskList = sync.$firebaseArray(ref); //downloads tasks into local array
 /*
   var getTasks = function (){
     return taskList;
@@ -170,7 +172,7 @@ app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
   };
 */
   return {
-    all: tasks
+    all: taskList
   }
 
 }]);
