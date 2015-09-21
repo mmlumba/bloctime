@@ -1,3 +1,4 @@
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var app = angular.module("PomiPomi", ["firebase", "ui.router", "angularMoment"]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
@@ -53,8 +54,8 @@ app.constant('Times', {
   LONGBREAK: '00:00:20'
 });
 
-app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times",
-  function($scope, $interval, ButtonText, Times){
+app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times", "submitTask",
+  function($scope, $interval, ButtonText, Times, submitTask){
 
     //var mySound = null;
 
@@ -138,3 +139,40 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     }
 
   }]);
+
+module.exports = app;
+
+},{}],2:[function(require,module,exports){
+var app = require('./app.js');
+
+app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
+
+  var ref = new Firebase("https://pomipomi.firebaseio.com"); //Firebase reference
+  var sync = $firebase(ref); //AngularFire reference to data
+  //var taskList = [];
+  taskList = sync.$firebaseArray(ref); //downloads tasks into local array
+/*
+  var getTasks = function (){
+    return taskList;
+  }
+
+  var add = function(taskName){
+    var item = {
+      content: taskName
+    };
+
+    taskList.$add(item)
+    taskList.$save(item)
+  }
+
+  var update = function(){
+    tasks.$save(item)
+  };
+*/
+  return {
+    all: tasks
+  }
+
+}]);
+
+},{"./app.js":1}]},{},[1,2]);

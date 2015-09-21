@@ -53,8 +53,8 @@ app.constant('Times', {
   LONGBREAK: '00:00:20'
 });
 
-app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times",
-  function($scope, $interval, ButtonText, Times){
+app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times", "submitTask",
+  function($scope, $interval, ButtonText, Times, submitTask){
 
     //var mySound = null;
 
@@ -138,3 +138,5 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     }
 
   }]);
+
+module.exports = app;
