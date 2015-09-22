@@ -62,7 +62,12 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     var workCount = 0;
     var breakCount = 0;
 
-    $scope.tasks = submitTask.all;
+    $scope.tasks = submitTask.getTasks();
+
+    $scope.addNewTask = function() {
+      submitTask.add($scope.task);
+      $scope.task = "";
+    };
 
     $scope.isStarted = false; //executes javascript code that subtracts the time
     var timeDuration = moment.duration(Times.WORKTIME);
@@ -153,11 +158,11 @@ app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
   var taskList =  $firebaseArray(ref); //AngularFire reference to data
   //var taskList = [];
   //taskList = sync.$firebaseArray(ref); //downloads tasks into local array
-/*
+
   var getTasks = function (){
     return taskList;
   }
-*/
+
   var add = function(taskName){
     var item = {
       content: taskName
@@ -167,13 +172,13 @@ app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
     taskList.$save(item)
   }
 
-  var update = function(){
-    tasks.$save(item)
-  };
+  /*var update = function(){
+    taskList.$save(item)
+  };*/
 
   return {
-    add: add,
-    update: update
+    getTasks: getTasks,
+    add: add
   }
 
 }]);
