@@ -11,6 +11,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         templateUrl: '/templates/home.html'
       },
       'taskList@home': {
+        controller: 'Timer.controller',
         templateUrl: '/templates/taskList.html'
       }
     }
@@ -53,13 +54,21 @@ app.constant('Times', {
   LONGBREAK: '00:00:20'
 });
 
-app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times",
-  function($scope, $interval, ButtonText, Times){
+app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times", "submitTask",
+  function($scope, $interval, ButtonText, Times, submitTask){
 
     //var mySound = null;
 
     var workCount = 0;
     var breakCount = 0;
+
+    $scope.tasks = submitTask.getTasks();
+
+    $scope.addNewTask = function() {
+      submitTask.add($scope.task);
+      $scope.task = "";
+      console.log("rawklfjasdlfkja");
+    };
 
     $scope.isStarted = false; //executes javascript code that subtracts the time
     var timeDuration = moment.duration(Times.WORKTIME);
@@ -138,3 +147,5 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     }
 
   }]);
+
+module.exports = app;

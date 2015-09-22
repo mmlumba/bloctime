@@ -7,10 +7,11 @@ module.exports = function(grunt) {
     grunt.registerTask( 'run', [ 'hapi', 'watch' ]);
 
     grunt.initConfig({
-        browserify: {
+        browserify: { //syntatic sugar (allows you to export modules); compiles all js files into one dist file
+          //module: package that contains many features; an app that references a module has access to all features in the module
             dist: {
                 files: {
-                    './dist/js/app.js': ['./app/scripts/app.js']
+                    './dist/js/app.js': ['./app/scripts/*.js']
                 }
             }
         },
@@ -57,7 +58,7 @@ module.exports = function(grunt) {
             }
         },
 
-        copy: {
+        copy: { //copies files from source directory and puts them into dest directory
             dist: {
                 files: [{
                     expand: true,
@@ -74,12 +75,16 @@ module.exports = function(grunt) {
                     src: [ './**/*.html' ],
                     dest: './dist/templates',
                     cwd: './app/templates'
-                }, {
-                  expand: true,
-                  src: [ './**/*.js' ],
-                  dest: './dist/js',
-                  cwd: './app/scripts'
-                }]
+                },
+
+              //}
+              //, {
+              //  expand: true,
+            //    src: [ './**/*.js' ],
+            //    dest: './dist/js',
+            //    cwd: './app/scripts'
+            //  }
+              ]
             }
         },
 
