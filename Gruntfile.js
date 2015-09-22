@@ -77,7 +77,7 @@ module.exports = function(grunt) {
                     cwd: './app/templates'
                 },
 
-              }
+              //}
               //, {
               //  expand: true,
             //    src: [ './**/*.js' ],

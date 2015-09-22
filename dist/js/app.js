@@ -157,7 +157,7 @@ app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
   var getTasks = function (){
     return taskList;
   }
-
+*/
   var add = function(taskName){
     var item = {
       content: taskName
@@ -170,9 +170,10 @@ app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
   var update = function(){
     tasks.$save(item)
   };
-*/
+
   return {
-    all: taskList
+    add: add,
+    update: update
   }
 
 }]);
