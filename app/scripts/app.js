@@ -67,7 +67,6 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     $scope.addNewTask = function() {
       submitTask.add($scope.task);
       $scope.task = "";
-      console.log("rawklfjasdlfkja");
     };
 
     $scope.isStarted = false; //executes javascript code that subtracts the time
