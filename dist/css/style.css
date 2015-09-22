@@ -1,2 +1,15 @@
-.tasklist {
-  background-color: #99CCFF; }
+body {
+  font-family: Lato; }
+  body .tasklist {
+    overflow: auto;
+    background-color: #C9F1F2;
+    min-height: 100%;
+    position: relative; }
+    body .tasklist li {
+      width: 100%;
+      list-style-type: none;
+      margin-left: -35px; }
+      body .tasklist li.odd {
+        background-color: #C9F1F2; }
+      body .tasklist li.even {
+        background-color: #FFFFFF; }
