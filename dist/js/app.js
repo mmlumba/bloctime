@@ -12,6 +12,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         templateUrl: '/templates/home.html'
       },
       'taskList@home': {
+        controller: 'Timer.controller',
         templateUrl: '/templates/taskList.html'
       }
     }
@@ -67,6 +68,7 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     $scope.addNewTask = function() {
       submitTask.add($scope.task);
       $scope.task = "";
+      console.log("rawklfjasdlfkja");
     };
 
     $scope.isStarted = false; //executes javascript code that subtracts the time
@@ -154,8 +156,9 @@ var app = require('./app.js');
 
 app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
 
-  var ref = new Firebase("https://pomipomi.firebaseio.com"); //Firebase reference
-  var taskList =  $firebaseArray(ref); //AngularFire reference to data
+  var ref = new Firebase("https://pomipomi.firebaseio.com/tasks"); //Firebase reference
+  var taskList = [];
+  taskList =  $firebaseArray(ref); //AngularFire reference to data
   //var taskList = [];
   //taskList = sync.$firebaseArray(ref); //downloads tasks into local array
 

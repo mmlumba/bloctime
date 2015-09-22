@@ -11,6 +11,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         templateUrl: '/templates/home.html'
       },
       'taskList@home': {
+        controller: 'Timer.controller',
         templateUrl: '/templates/taskList.html'
       }
     }
@@ -66,6 +67,7 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     $scope.addNewTask = function() {
       submitTask.add($scope.task);
       $scope.task = "";
+      console.log("rawklfjasdlfkja");
     };
 
     $scope.isStarted = false; //executes javascript code that subtracts the time
