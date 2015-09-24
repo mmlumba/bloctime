@@ -17,4 +17,14 @@ body {
         }
       }
   }
+  .btn-info {
+    background-color: #168ED6;
+    border-color: #3CA0DB;
+    &:hover{
+      background-color: #067EC5;
+    }
+    &:focus{
+      background-color: #168ED6;
+    }
+  }
 }
