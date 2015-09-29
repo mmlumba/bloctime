@@ -1,3 +1,30 @@
-.tasklist {
-    background-color: #99CCFF;
+body {
+  font-family: Lato;
+  .tasklist {
+      overflow: auto;
+      background-color: #C9F1F2;
+      min-height: 100%;
+      position: relative;
+      li {
+        width: 100%;
+        list-style-type: none;
+        margin-left: -35px;
+        &.odd {
+          background-color: #C9F1F2;
+        }
+        &.even {
+          background-color: #FFFFFF;
+        }
+      }
+  }
+  .btn-info {
+    background-color: #168ED6;
+    border-color: #3CA0DB;
+    &:hover{
+      background-color: #067EC5;
+    }
+    &:focus{
+      background-color: #168ED6;
+    }
+  }
 }

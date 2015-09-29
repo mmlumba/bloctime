@@ -9,6 +9,6 @@
     </div>
   </form>
   <ul class="taskList">
-    <li ng-repeat="task in tasks">{{task.content}}</li>
+    <li ng-repeat="task in tasks | sortByDate" ng-class-odd="'odd'" ng-class-even="'even'">{{task.content}}</li>
   </ul>
 </div>
