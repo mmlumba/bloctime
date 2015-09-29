@@ -168,18 +168,6 @@ app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
   var taskList = [];
   taskList =  $firebaseArray(ref); //AngularFire reference to data; downloads tasks into local array
 
-  /*ref.endAt().limit(100).on('value', update);
-
-  var reverseTasks = function(snap){
-    var list = [];
-    snap.forEach(function(ss) {
-       var data = ss.val();
-       data['.priority'] = ss.getPriority();
-       data['.name'] = ss.name();
-       list.unshift(data);
-    });
-  }*/
-
   ref.child('tasks').startAt().limitToFirst(20).on('child_added', function(fbdata) {
     console.log(fbdata.exportVal());
   })
@@ -198,6 +186,7 @@ app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
     taskList.$save(item);
   }
 
+  //future feature maybe?
   /*var update = function(){
     taskList.$save(item)
   };*/
