@@ -58,9 +58,9 @@ app.constant('ButtonText', {
 });
 
 app.constant('Times', {
-  WORKTIME: '00:00:10',
-  BREAKTIME: '00:00:05',
-  LONGBREAK: '00:00:20'
+  WORKTIME: '00:25:00',
+  BREAKTIME: '00:05:00',
+  LONGBREAK: '00:30:00'
 });
 
 app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times", "submitTask",
