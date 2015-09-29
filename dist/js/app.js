@@ -43,6 +43,14 @@ app.filter('durationDisplay', function(){
   }
 });
 
+app.filter('sortByDate', function() {
+  return function(input) {
+    return input.sort(function(a, b) {
+      return moment(b.createdAt) - moment(a.createdAt);
+    });
+  };
+});
+
 app.constant('ButtonText', {
   START: 'Start the Timer!',
   RESET: 'Reset the Timer!',
@@ -148,6 +156,7 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
 
   }]);
 
+
 module.exports = app;
 
 },{}],2:[function(require,module,exports){
@@ -167,11 +176,12 @@ app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
 
   var add = function(taskName){
     var item = {
-      content: taskName
+      content: taskName,
+      createdAt: moment().toString()
     };
 
-    taskList.$add(item)
-    taskList.$save(item)
+    taskList.$add(item);
+    taskList.$save(item);
   }
 
   /*var update = function(){

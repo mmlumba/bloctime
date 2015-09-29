@@ -14,11 +14,12 @@ app.factory('submitTask', ['$firebaseArray', function($firebaseArray) {
 
   var add = function(taskName){
     var item = {
-      content: taskName
+      content: taskName,
+      createdAt: moment().toString()
     };
 
-    taskList.$add(item)
-    taskList.$save(item)
+    taskList.$add(item);
+    taskList.$save(item);
   }
 
   /*var update = function(){

@@ -42,6 +42,14 @@ app.filter('durationDisplay', function(){
   }
 });
 
+app.filter('sortByDate', function() {
+  return function(input) {
+    return input.sort(function(a, b) {
+      return moment(b.createdAt) - moment(a.createdAt);
+    });
+  };
+});
+
 app.constant('ButtonText', {
   START: 'Start the Timer!',
   RESET: 'Reset the Timer!',
@@ -146,5 +154,6 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
     }
 
   }]);
+
 
 module.exports = app;
