@@ -95,7 +95,8 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
 
     $scope.$watch('message.time', function(newVal, oldVal){
       //console.log(newVal, oldVal);
-      if ( newVal.seconds() === 0 ) {
+
+      if ( newVal.asSeconds() === 0 ) {
         //mySound.load();
         mySound.bind("error", function(e){
           console.log(this.getErrorMessage());
@@ -108,13 +109,13 @@ app.controller("Timer.controller", ["$scope", "$interval", "ButtonText", "Times"
           $scope.buttonText = ButtonText.START;
           breakCount++
           //console.log("break count: " + breakCount);
-          alert("BACK TO WORK");
+            alert("BACK TO WORK");
         }
         else {
           $scope.onBreak = true;
           workCount++
           //console.log("work session count: " + workCount);
-          alert("BREAK TIME");
+            alert("BREAK TIME");
         }
 
         $scope.isStarted = false;
