@@ -1,0 +1,22 @@
+body {
+  font-family: Lato; }
+  body .tasklist {
+    overflow: auto;
+    background-color: #C9F1F2;
+    min-height: 100%;
+    position: relative; }
+    body .tasklist li {
+      width: 100%;
+      list-style-type: none;
+      margin-left: -35px; }
+      body .tasklist li.odd {
+        background-color: #C9F1F2; }
+      body .tasklist li.even {
+        background-color: #FFFFFF; }
+  body .btn-info {
+    background-color: #168ED6;
+    border-color: #3CA0DB; }
+    body .btn-info:hover {
+      background-color: #067EC5; }
+    body .btn-info:focus {
+      background-color: #168ED6; }

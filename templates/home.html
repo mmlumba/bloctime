@@ -1,0 +1,5 @@
+<div class="col-md-4">
+<h2>{{message.time | durationDisplay}}</h2>
+<input type="button" ng-hide="onBreak" class="btn btn-primary btn-lg btn-info" value="{{buttonText}}" ng-click="startTimer()"></input>
+<input type="button" ng-show="onBreak" class="btn btn-primary btn-lg btn-info" value="{{breakText}}" ng-click="startBreakTimer()"></input>
+</div>

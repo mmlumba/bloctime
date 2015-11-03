@@ -1,0 +1,14 @@
+<div class="tasklist col-md-4">
+  <h2>Task History</h2>
+  <form name="pomiTasks" ng-submit="addNewTask()">
+    <div class="form-group">
+      <input type="text" ng-model="task" id="taskDescription" placeholder="My Task">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Add Task">
+    </div>
+  </form>
+  <ul class="taskList">
+    <li ng-repeat="task in tasks | sortByDate" ng-class-odd="'odd'" ng-class-even="'even'">{{task.content}}</li>
+  </ul>
+</div>
